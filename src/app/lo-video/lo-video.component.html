@@ -1,1 +1,33 @@
-<p>lo-video works!</p>
+<input class="form-control" type="text" placeholder="Enter your search text ..." [(ngModel)]="filteredVideos" name="filteredVideos">
+<table class="table">
+  <thead>
+      <!-- Table Headings -->
+    <tr>
+      <th scope="col-1"> </th>
+      <th scope="col-9">Title</th>
+      <th scope="col-1">Publish Date</th>
+      <th scope="col-1"> </th>
+    </tr>
+  </thead>
+  <!-- Table Body -->
+  <tbody>
+    <tr>
+      <th scope="row"> <img class="image-size" src="../../assets/news-topic-image.png" alt="">  </th>
+      <td>Nullam sagittis. Nam commodo suscipit quam. Sed fringilla mauris sit amet nibh.</td>
+      <td>12-3-2020</td>
+      <td> <button class="btn">Details</button> </td>
+    </tr>
+    <tr *ngFor="let video of videos | paginate:{itemsPerPage: 5, currentPage:p}  | filterlist : filteredVideos">
+      <th scope="row"><img [src]="video.snippet.thumbnails.medium.url" class="card-img-top" alt="..."></th>
+      <td> <p>{{video.snippet.title }}</p>  </td>
+      <td>{{video.snippet.publishedAt | date:"dd-MM-yyyy"}}</td>
+      <td><a class="btn" [routerLink]="['/video-details', video.id.videoId]"> Details </a></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="text-center">
+        <div id="pagination">
+                <pagination-controls (pageChange)="p=$event"></pagination-controls>
+            </div>   
+</div>
